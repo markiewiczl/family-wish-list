@@ -26,3 +26,4 @@
 
 /.docker/mysql
 /node_modules
+.idea/*.iml
