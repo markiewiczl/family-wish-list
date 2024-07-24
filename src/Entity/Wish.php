@@ -26,6 +26,12 @@ class Wish
     #[ORM\OneToOne(mappedBy: 'wish', cascade: ['persist', 'remove'])]
     private ?Product $product = null;
 
+    public function __construct()
+    {
+        $this->isGranted = false;
+        $this->setCreatedAt(new \DateTimeImmutable());
+    }
+
     public function getId(): ?int
     {
         return $this->id;

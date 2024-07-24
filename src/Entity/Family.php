@@ -19,14 +19,14 @@ class Family
      * @var Collection<int, User>
      */
     #[ORM\OneToMany(targetEntity: User::class, mappedBy: 'family')]
-    private Collection $Users;
+    private Collection $users;
 
     #[ORM\Column(length: 50)]
     private ?string $name = null;
 
     public function __construct()
     {
-        $this->Users = new ArrayCollection();
+        $this->users = new ArrayCollection();
     }
 
     public function getId(): ?int
@@ -39,13 +39,13 @@ class Family
      */
     public function getUsers(): Collection
     {
-        return $this->Users;
+        return $this->users;
     }
 
     public function addUser(User $user): static
     {
-        if (!$this->Users->contains($user)) {
-            $this->Users->add($user);
+        if (!$this->users->contains($user)) {
+            $this->users->add($user);
             $user->setFamily($this);
         }
 
@@ -54,7 +54,7 @@ class Family
 
     public function removeUser(User $user): static
     {
-        if ($this->Users->removeElement($user)) {
+        if ($this->users->removeElement($user)) {
             // set the owning side to null (unless already changed)
             if ($user->getFamily() === $this) {
                 $user->setFamily(null);

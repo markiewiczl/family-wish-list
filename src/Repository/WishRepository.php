@@ -16,6 +16,29 @@ class WishRepository extends ServiceEntityRepository
         parent::__construct($registry, Wish::class);
     }
 
+    public function create(): Wish
+    {
+        return new Wish();
+    }
+
+    public function save(Wish $family, bool $flush = false): void
+    {
+        $this->getEntityManager()->persist($family);
+
+        if ($flush === true) {
+            $this->getEntityManager()->flush();
+        }
+    }
+
+    public function remove(Wish $family, bool $flush = false): void
+    {
+        $this->getEntityManager()->remove($family);
+
+        if ($flush === true) {
+            $this->getEntityManager()->flush();
+        }
+    }
+
     //    /**
     //     * @return Wish[] Returns an array of Wish objects
     //     */

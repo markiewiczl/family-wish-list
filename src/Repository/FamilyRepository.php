@@ -16,20 +16,43 @@ class FamilyRepository extends ServiceEntityRepository
         parent::__construct($registry, Family::class);
     }
 
-    //    /**
-    //     * @return Family[] Returns an array of Family objects
-    //     */
-    //    public function findByExampleField($value): array
-    //    {
-    //        return $this->createQueryBuilder('f')
-    //            ->andWhere('f.exampleField = :val')
-    //            ->setParameter('val', $value)
-    //            ->orderBy('f.id', 'ASC')
-    //            ->setMaxResults(10)
-    //            ->getQuery()
-    //            ->getResult()
-    //        ;
-    //    }
+    public function create(): Family
+    {
+        return new Family();
+    }
+
+    public function save(Family $family, bool $flush = false): void
+    {
+        $this->getEntityManager()->persist($family);
+
+        if ($flush === true) {
+            $this->getEntityManager()->flush();
+        }
+    }
+
+    public function remove(Family $family, bool $flush = false): void
+    {
+        $this->getEntityManager()->remove($family);
+
+        if ($flush === true) {
+            $this->getEntityManager()->flush();
+        }
+    }
+
+//    /**
+//     * @return Family[] Returns an array of Family objects
+//     */
+//    public function findByExampleField($value): array
+//    {
+//        return $this->createQueryBuilder('f')
+//            ->andWhere('f.exampleField = :val')
+//            ->setParameter('val', $value)
+//            ->orderBy('f.id', 'ASC')
+//            ->setMaxResults(10)
+//            ->getQuery()
+//            ->getResult()
+//        ;
+//    }
 
     //    public function findOneBySomeField($value): ?Family
     //    {
