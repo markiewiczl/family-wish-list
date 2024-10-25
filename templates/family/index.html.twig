@@ -1,20 +1,64 @@
 {% extends 'base.html.twig' %}
 
-{% block title %}Hello FamillyController!{% endblock %}
+{% block title %}Ustawienia grupy {{ family_name }}!{% endblock %}
 
 {% block body %}
-<style>
-    .example-wrapper { margin: 1em auto; max-width: 800px; width: 95%; font: 18px/1.5 sans-serif; }
-    .example-wrapper code { background: #F5F5F5; padding: 2px 6px; }
-</style>
+    <style>
+        .example-wrapper { margin: 1em auto; max-width: 800px; width: 95%; font: 18px/1.5 sans-serif; }
+        .example-wrapper code { background: #F5F5F5; padding: 2px 6px; }
+        .copy-link {
+            display: inline-block;
+            background-color: #4CAF50;
+            color: white;
+            padding: 8px 12px;
+            cursor: pointer;
+            border-radius: 5px;
+        }
+        .copy-message {
+            color: green;
+            display: none;
+            margin-top: 10px;
+        }
+    </style>
 
-<div class="example-wrapper">
-    <h1>Ustawienia grupy {{ family_name }}! ✅</h1>
+    <div class="example-wrapper">
+        <h1>Ustawienia grupy {{ family_name }}! ✅</h1>
 
-    This friendly message is coming from:
-    <ul>
-        <li>Your controller at <code>/var/www/wish-list/src/Controller/FamillyController.php</code></li>
-        <li>Your template at <code>/var/www/wish-list/templates/familly/index.html.twig</code></li>
-    </ul>
-</div>
+        This friendly message is coming from:
+        <ul>
+            <li>Your controller at <code>/var/www/wish-list/src/Controller/FamillyController.php</code></li>
+            <li>Your template at <code>/var/www/wish-list/templates/familly/index.html.twig</code></li>
+        </ul>
+
+        <h2>Invitation Link</h2>
+        <p>Copy the invitation link below and send it to invite a new user:</p>
+
+        <input type="text" id="invitation-link" value="{{ url('family_add_user_with_invitation', { token: token }) }}" readonly style="width: 100%; padding: 10px; border: 1px solid #ccc; border-radius: 5px;">
+
+        <button class="copy-link" onclick="copyLink()">Copy Link</button>
+        <p class="copy-message" id="copy-message">Link copied to clipboard!</p>
+    </div>
+
+    <script>
+        function copyLink() {
+            // Get the input element
+            var copyText = document.getElementById("invitation-link");
+
+            // Select the text field
+            copyText.select();
+            copyText.setSelectionRange(0, 99999); // For mobile devices
+
+            // Copy the text inside the text field
+            document.execCommand("copy");
+
+            // Show the message
+            var message = document.getElementById("copy-message");
+            message.style.display = "block";
+
+            // Hide the message after 2 seconds
+            setTimeout(function() {
+                message.style.display = "none";
+            }, 2000);
+        }
+    </script>
 {% endblock %}

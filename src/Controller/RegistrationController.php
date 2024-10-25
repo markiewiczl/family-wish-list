@@ -53,7 +53,7 @@ class RegistrationController extends AbstractController
 
             // do anything else you need here, like send an email
 
-            return $this->redirectToRoute('family_wish_list');
+            return $this->redirectToRoute('family_settings', ['familyId' => 1]);
         }
 
         return $this->render('registration/register.html.twig', [

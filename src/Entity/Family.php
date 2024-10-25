@@ -8,7 +8,7 @@ use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
 
 #[ORM\Entity(repositoryClass: FamilyRepository::class)]
-class Family
+class Family implements FamilyInterface
 {
     #[ORM\Id]
     #[ORM\GeneratedValue]
@@ -23,6 +23,9 @@ class Family
 
     #[ORM\Column(length: 50)]
     private ?string $name = null;
+
+    #[ORM\OneToOne(mappedBy: 'family', cascade: ['persist', 'remove'])]
+    private ?Invitation $invitation = null;
 
     public function __construct()
     {
@@ -72,6 +75,23 @@ class Family
     public function setName(string $name): static
     {
         $this->name = $name;
+
+        return $this;
+    }
+
+    public function getInvitation(): ?Invitation
+    {
+        return $this->invitation;
+    }
+
+    public function setInvitation(Invitation $invitation): static
+    {
+        // set the owning side of the relation if necessary
+        if ($invitation->getFamily() !== $this) {
+            $invitation->setFamily($this);
+        }
+
+        $this->invitation = $invitation;
 
         return $this;
     }
